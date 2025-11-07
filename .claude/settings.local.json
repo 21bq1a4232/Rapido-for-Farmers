@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree tractor-app -L 3)",
+      "Bash([ -d \"node_modules\" ])",
+      "Bash(cat README.md)",
+      "Bash(curl -s \"https://via.placeholder.com/1024x1024/2ECC71/FFFFFF?text=FarmShare\" -o icon.png)",
+      "Bash(curl -s \"https://via.placeholder.com/2048x2048/2ECC71/FFFFFF?text=FarmShare\" -o splash.png)",
+      "Bash(curl -s \"https://via.placeholder.com/1024x1024/2ECC71/FFFFFF?text=FarmShare\" -o adaptive-icon.png)",
+      "Bash(curl -s \"https://via.placeholder.com/48x48/2ECC71/FFFFFF?text=F\" -o favicon.png)",
+      "Bash(curl -s \"https://via.placeholder.com/96x96/2ECC71/FFFFFF?text=!\" -o notification-icon.png)",
+      "Bash(node generate-assets.js)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
