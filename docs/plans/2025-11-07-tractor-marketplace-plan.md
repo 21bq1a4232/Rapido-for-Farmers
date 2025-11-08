@@ -9,6 +9,7 @@ Build a production-ready tractor rental marketplace for single-region pilot (100
 
 ---
 
+## github password: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
 ## Implementation Phases
 
 ### Phase 1: Project Setup & Infrastructure ✅
