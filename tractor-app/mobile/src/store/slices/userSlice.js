@@ -2,6 +2,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userAPI, paymentAPI } from '../../services/api';
 
 // Async thunks
+export const fetchUserProfile = createAsyncThunk(
+  'user/fetchUserProfile',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await userAPI.getProfile();
+      return response.user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const updateProfile = createAsyncThunk(
   'user/updateProfile',
   async (data, { rejectWithValue }) => {
@@ -80,6 +92,7 @@ export const fetchPaymentHistory = createAsyncThunk(
 
 // Initial state
 const initialState = {
+  profile: null,
   walletBalance: 0,
   walletSummary: null,
   paymentHistory: [],
@@ -104,6 +117,21 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Fetch User Profile
+    builder
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+        state.walletBalance = action.payload.wallet || 0;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
     // Update Profile
     builder
       .addCase(updateProfile.pending, (state) => {
