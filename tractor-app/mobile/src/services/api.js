@@ -8,6 +8,7 @@ const api = axios.create({
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true', // Skip ngrok browser warning
   },
 });
 
@@ -27,11 +28,22 @@ api.interceptors.request.use(
 
 // Response interceptor for error handling
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    console.log('✅ API Response:', response.config.url, response.status);
+    return response.data;
+  },
   async (error) => {
+    console.log('❌ API Error:', error.config?.url);
+    console.log('❌ Error details:', {
+      hasResponse: !!error.response,
+      hasRequest: !!error.request,
+      message: error.message,
+    });
+
     if (error.response) {
       // Server responded with error status
       const { status, data } = error.response;
+      console.log('❌ Server error:', status, data);
 
       if (status === 401) {
         // Unauthorized - clear token and redirect to login
@@ -46,11 +58,14 @@ api.interceptors.response.use(
       });
     } else if (error.request) {
       // Request made but no response
+      console.log('❌ No response received from server');
+      console.log('❌ Request config:', JSON.stringify(error.config, null, 2));
       return Promise.reject({
         message: 'Network error. Please check your connection.',
       });
     } else {
       // Error in request setup
+      console.log('❌ Request setup error:', error.message);
       return Promise.reject({
         message: error.message || 'An error occurred',
       });

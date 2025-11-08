@@ -219,13 +219,31 @@ Build a production-ready tractor rental marketplace for single-region pilot (100
 
 **Note:** Availability calendar feature deferred - current implementation uses isActive toggle
 
-### Phase 12: Mobile Payment & Wallet ⬜
-- [ ] Build WalletScreen showing balance
+### Phase 12: Mobile Payment & Wallet ⏳ (Partially Complete)
+- [x] Build WalletScreen showing balance
+- [x] Create ProfileScreen with user settings
+- [x] Fix critical navigation bug (SplashScreen user loading)
+- [x] Add fallback logic for missing user role
 - [ ] Create AddMoney screen with Razorpay integration
-- [ ] Implement PaymentHistory screen
+- [ ] Implement PaymentHistory screen (basic version exists in WalletScreen)
 - [ ] Build in-app payment confirmation flows
 - [ ] Add transaction status tracking
 - [ ] **Update plan.md checkpoint:** "Phase 12 Complete"
+
+**Completed:** 2025-11-08
+**Files Created:**
+- mobile/src/screens/WalletScreen.js - Wallet balance display, transaction history, add money button (placeholder)
+- mobile/src/screens/ProfileScreen.js - User profile with stats, settings, language toggle, logout
+
+**Files Modified:**
+- mobile/src/screens/SplashScreen.js - Fixed critical bug: now properly dispatches user to Redux and checks role before navigation
+- mobile/src/navigation/MainTabNavigator.js - Imported real WalletScreen and ProfileScreen, added fallback logic to show farmer tabs if role not set
+
+**Bug Fixes:**
+- Fixed SplashScreen dispatching `{ user, token }` instead of just `user`, which caused `user.role` to be undefined
+- Added role checking in SplashScreen to redirect to RoleSelection if role not set
+- Added fallback in MainTabNavigator to show FarmerHome by default if role is missing
+- These fixes resolve the blank screen issue where only Wallet and Profile tabs were visible
 
 ### Phase 13: Mobile Real-time Features ⬜
 - [ ] Setup Socket.io client
@@ -663,6 +681,6 @@ After completing each phase checkpoint:
 
 ---
 
-**Last Updated:** 2025-11-07 - Phase 5 completed
-**Current Phase:** Phase 6 - Real-time Features
-**Status:** Phases 1-5 ✅ Complete (31%) | Payment system with escrow operational | Ready for real-time
+**Last Updated:** 2025-11-08 - Phase 12 partially completed, critical navigation bug fixed
+**Current Phase:** Phase 6 (Real-time) or Phase 12 (Wallet/Payments completion)
+**Status:** Phases 1-5, 8-11 ✅ Complete | Phase 12 ⏳ 50% (62% overall) | Critical bug fix: blank screen resolved

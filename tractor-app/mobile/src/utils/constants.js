@@ -1,7 +1,6 @@
 // API Configuration
-export const API_BASE_URL = __DEV__
-  ? 'http://localhost:5000/api'  // Development - change to your computer's IP if using physical device
-  : 'https://your-production-api.com/api';
+// Using ngrok tunnel for local MacBook development
+export const API_BASE_URL = 'https://184d36d35e21.ngrok-free.app/api';
 
 // Colors
 export const COLORS = {

@@ -92,11 +92,16 @@ const PhoneLoginScreen = ({ navigation }) => {
     }
 
     try {
-      await dispatch(sendOTP(phone)).unwrap();
+      console.log('🔵 Attempting to send OTP to:', phone);
+      console.log('🔵 API Base URL:', require('../utils/constants').API_BASE_URL);
+      const result = await dispatch(sendOTP(phone)).unwrap();
+      console.log('✅ OTP sent successfully:', result);
       // Navigation happens via useEffect when otpSent becomes true
     } catch (err) {
       // Error is stored in Redux state
-      console.error('Send OTP error:', err);
+      console.error('❌ Send OTP error:', err);
+      console.error('❌ Error type:', typeof err);
+      console.error('❌ Error stringified:', JSON.stringify(err, null, 2));
     }
   };
 

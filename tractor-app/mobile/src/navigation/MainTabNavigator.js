@@ -5,10 +5,8 @@ import { useSelector } from 'react-redux';
 import { COLORS } from '../utils/constants';
 import FarmerHomeScreen from '../screens/FarmerHomeScreen';
 import OwnerHomeScreen from '../screens/OwnerHomeScreen';
-
-// Placeholder screens for tabs (to be created in later phases)
-const WalletScreen = () => null;
-const ProfileScreen = () => null;
+import WalletScreen from '../screens/WalletScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +15,8 @@ const MainTabNavigator = () => {
   const role = user?.role;
 
   // Determine which tabs to show based on user role
-  const showFarmerTabs = role === 'farmer' || role === 'both';
+  // If no role is set, show farmer tabs by default
+  const showFarmerTabs = !role || role === 'farmer' || role === 'both';
   const showOwnerTabs = role === 'owner' || role === 'both';
 
   return (

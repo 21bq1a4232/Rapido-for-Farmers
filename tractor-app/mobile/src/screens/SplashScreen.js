@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
+import { setUser } from '../store/slices/authSlice';
 import { COLORS, SIZES, STORAGE_KEYS } from '../utils/constants';
 import { t, setLanguage, getCurrentLanguage } from '../utils/i18n';
 
@@ -37,13 +38,19 @@ const SplashScreen = ({ navigation }) => {
       const userJson = await AsyncStorage.getItem(STORAGE_KEYS.USER);
 
       if (token && userJson) {
-        // User is logged in - navigate to main app
+        // User is logged in - dispatch user to Redux
         const user = JSON.parse(userJson);
-        dispatch({ type: 'auth/setUser', payload: { user, token } });
+        dispatch(setUser(user));
 
-        // Navigate based on role
+        // Navigate based on whether role is set
         setTimeout(() => {
-          navigation.replace('Main');
+          if (user.role) {
+            // Role is set - go to main app
+            navigation.replace('Main');
+          } else {
+            // No role - go to role selection
+            navigation.replace('RoleSelection');
+          }
         }, 1500);
       } else {
         // No auth - navigate to login

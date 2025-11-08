@@ -92,7 +92,7 @@ class SMSService {
     const statusMessages = {
       accepted: 'Your booking has been accepted by the owner!',
       rejected: 'Your booking request was declined. Please try another tractor.',
-      in-progress: 'Your booking is now in progress. Safe farming!',
+      'in-progress': 'Your booking is now in progress. Safe farming!',
       completed: 'Your booking is completed. Please rate your experience.',
       cancelled: 'Your booking has been cancelled.'
     };
