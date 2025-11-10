@@ -12,12 +12,15 @@ const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
   const { user } = useSelector((state) => state.auth);
-  const role = user?.role;
+  const roles = user?.role || [];
+
+  // Convert roles array to a set for faster lookups
+  const roleSet = new Set(roles);
 
   // Determine which tabs to show based on user role
   // If no role is set, show farmer tabs by default
-  const showFarmerTabs = !role || role === 'farmer' || role === 'both';
-  const showOwnerTabs = role === 'owner' || role === 'both';
+  const showFarmerTabs = roles.length === 0 || roleSet.has('farmer') || roleSet.has('both');
+  const showOwnerTabs = roleSet.has('owner') || roleSet.has('both');
 
   return (
     <Tab.Navigator

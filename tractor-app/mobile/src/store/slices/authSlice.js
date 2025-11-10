@@ -80,6 +80,7 @@ const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
+  needsRoleSelection: false, // Track if user needs to select role
   loading: false,
   error: null,
   otpSent: false,
@@ -131,7 +132,11 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isAuthenticated = true;
+        
+        // Check if user needs role selection
+        const userHasRole = action.payload.user.role && action.payload.user.role.length > 0;
+        state.isAuthenticated = userHasRole; // Only fully authenticated if user has role
+        state.needsRoleSelection = !userHasRole; // Need role selection if user has no role
         state.otpSent = false;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
@@ -147,11 +152,16 @@ const authSlice = createSlice({
       .addCase(getMe.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.isAuthenticated = true;
+        
+        // Check if user needs role selection
+        const userHasRole = action.payload.user.role && action.payload.user.role.length > 0;
+        state.isAuthenticated = userHasRole; // Only fully authenticated if user has role
+        state.needsRoleSelection = !userHasRole; // Need role selection if user has no role
       })
       .addCase(getMe.rejected, (state) => {
         state.loading = false;
         state.isAuthenticated = false;
+        state.needsRoleSelection = false;
       });
 
     // Logout
@@ -159,6 +169,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.needsRoleSelection = false;
       state.otpSent = false;
     });
 
@@ -186,6 +197,10 @@ const authSlice = createSlice({
       .addCase(updateUserRole.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        
+        // After user selects role, they are fully authenticated
+        state.isAuthenticated = true;
+        state.needsRoleSelection = false;
       })
       .addCase(updateUserRole.rejected, (state, action) => {
         state.loading = false;

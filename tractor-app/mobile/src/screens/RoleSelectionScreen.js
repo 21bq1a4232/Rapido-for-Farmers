@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
 import { updateUserRole } from '../store/slices/authSlice';
 import { COLORS, SIZES } from '../utils/constants';
 import { t } from '../utils/i18n';
 import Button from '../components/Button';
+import { navigationRef } from '../../App';
 
 const ROLES = [
   {
@@ -64,8 +66,16 @@ const RoleSelectionScreen = ({ navigation }) => {
     try {
       await dispatch(updateUserRole(selectedRole)).unwrap();
 
-      // Navigate to main app
-      navigation.replace('Main');
+      // Use global navigation reference to navigate to Main
+      // This ensures navigation works regardless of current navigator structure
+      if (navigationRef.current) {
+        navigationRef.current.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'Main' }],
+          })
+        );
+      }
     } catch (err) {
       console.error('Update role error:', err);
     }

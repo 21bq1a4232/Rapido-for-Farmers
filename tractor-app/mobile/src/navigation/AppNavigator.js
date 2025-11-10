@@ -27,7 +27,7 @@ import EarningsScreen from '../screens/EarningsScreen';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, needsRoleSelection, loading } = useSelector((state) => state.auth);
 
   return (
     <Stack.Navigator
@@ -41,7 +41,7 @@ const AppNavigator = () => {
         },
       }}
     >
-      {!isAuthenticated ? (
+      {!isAuthenticated || needsRoleSelection ? (
         // Auth Stack (Phase 9)
         <Stack.Group>
           <Stack.Screen

@@ -1,6 +1,7 @@
 // API Configuration
 // Using ngrok tunnel for local MacBook development
-export const API_BASE_URL = 'https://184d36d35e21.ngrok-free.app/api';
+// AUTO-GENERATED URL - DO NOT MODIFY MANUALLY
+export const API_BASE_URL = 'https://045fb2af781b.ngrok-free.app/api';  // NGROK_URL_PLACEHOLDER
 
 // Colors
 export const COLORS = {

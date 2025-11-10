@@ -54,16 +54,9 @@ const OTPVerificationScreen = ({ route, navigation }) => {
   }, []);
 
   useEffect(() => {
-    // Navigate to role selection or main app after successful verification
-    if (isAuthenticated && user) {
-      if (!user.role || user.role.length === 0) {
-        // User hasn't selected role yet
-        navigation.replace('RoleSelection');
-      } else {
-        // User has role - go to main app
-        navigation.replace('Main');
-      }
-    }
+    // After successful OTP verification, let the overall auth flow handle navigation
+    // The app navigator will automatically navigate to RoleSelection if needed
+    // or to Main if the user already has a role
   }, [isAuthenticated, user]);
 
   const handleOtpChange = (value, index) => {

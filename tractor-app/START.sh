@@ -11,7 +11,7 @@ fi
 
 echo "📦 Step 1: Installing Backend Dependencies..."
 cd backend
-npm install
+bun install
 
 echo ""
 echo "⚙️  Step 2: Setting up environment..."
@@ -56,7 +56,7 @@ echo "✅ Backend setup complete!"
 echo ""
 echo "📱 Step 4: Installing Mobile Dependencies..."
 cd ../mobile
-npm install
+bun install
 
 echo ""
 echo "✅ All dependencies installed!"
